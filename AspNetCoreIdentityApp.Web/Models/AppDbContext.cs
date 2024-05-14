@@ -2,7 +2,7 @@
 
 namespace AspNetCoreIdentityApp.Web.Models
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
 
     }
