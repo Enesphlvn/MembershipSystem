@@ -1,4 +1,5 @@
 using AspNetCoreIdentityApp.Web.Models;
+using AspNetCoreIdentityApp.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -24,6 +25,14 @@ namespace AspNetCoreIdentityApp.Web.Controllers
         }
 
         public IActionResult SignUp()
+        {
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignUp(SignUpViewModel request)
         {
 
 
