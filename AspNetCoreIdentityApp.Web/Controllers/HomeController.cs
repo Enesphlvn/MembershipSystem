@@ -1,10 +1,9 @@
+using AspNetCoreIdentityApp.Web.Extensions;
 using AspNetCoreIdentityApp.Web.Models;
 using AspNetCoreIdentityApp.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using AspNetCoreIdentityApp.Web.Extensions;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace AspNetCoreIdentityApp.Web.Controllers
 {
@@ -58,14 +57,20 @@ namespace AspNetCoreIdentityApp.Web.Controllers
                 return View();
             }
 
-            var signInResult = await _signInManager.PasswordSignInAsync(hasUser, request.Password, request.RememberMe, false);
+            var signInResult = await _signInManager.PasswordSignInAsync(hasUser, request.Password, request.RememberMe, true);
 
             if (signInResult.Succeeded)
             {
                 return Redirect(returnUrl);
             }
 
-            ModelState.AddModelErrorList(new List<string>() { "Email veya þifre yanlýþ." });
+            if (signInResult.IsLockedOut)
+            {
+                ModelState.AddModelErrorList(new List<string>() { "3 dakika boyunca giriþ yapamazsýnýz." });
+                return View();
+            }
+
+            ModelState.AddModelErrorList(new List<string>() { "Email veya þifre yanlýþ.", $"Baþarýsýz giriþ sayýsý: {await _userManager.GetAccessFailedCountAsync(hasUser)}" });
 
             return View();
 
