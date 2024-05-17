@@ -19,9 +19,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     var cookieBuilder = new CookieBuilder();
 
     cookieBuilder.Name = "MembershipSystemCookie";
-
     options.LoginPath = new PathString("/Home/Signin");
-
+    options.LogoutPath = new PathString("/Member/Logout");
     options.Cookie = cookieBuilder;
     options.ExpireTimeSpan = TimeSpan.FromDays(60);
     options.SlidingExpiration = true;
