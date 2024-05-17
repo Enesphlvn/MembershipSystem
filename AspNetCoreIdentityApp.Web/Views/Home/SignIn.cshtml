@@ -11,7 +11,7 @@
             @TempData["SuccessMessage"]
         </div>
 
-        <form asp-controller="Home" asp-action="SignIn" method="post">
+        <form asp-controller="Home" asp-action="SignIn" asp-route-returnurl="@Context.Request.Query["returnURL"]" method="post">
             <div class="mb-3">
                 <label for="Email" class="form-label" asp-for="Email"></label>
                 <input value="enes@enes.com" class="form-control" asp-for="Email">
