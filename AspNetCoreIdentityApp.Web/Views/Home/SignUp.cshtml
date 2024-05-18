@@ -2,6 +2,7 @@
     ViewData["Title"] = "SignUp";
 }
 @model SignUpViewModel
+
 @section Scripts
 {
     @await Html.PartialAsync("_ValidationScriptsPartial");
@@ -54,7 +55,10 @@
                 <span class="text-danger" asp-validation-for="PasswordConfirm"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+
+            </div>
         </form>
     </div>
 </div>

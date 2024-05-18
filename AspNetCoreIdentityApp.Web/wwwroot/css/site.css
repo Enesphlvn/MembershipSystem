@@ -20,3 +20,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.no-underline {
+    text-decoration: none;
+}
+
+.move-up {
+    margin-top: -8px;
+}
+
+.move-down {
+    margin-top: 7px;
+}
