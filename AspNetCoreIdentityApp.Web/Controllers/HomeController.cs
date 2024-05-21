@@ -4,6 +4,7 @@ using AspNetCoreIdentityApp.Web.Services;
 using AspNetCoreIdentityApp.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp;
 using System.Diagnostics;
 
 namespace AspNetCoreIdentityApp.Web.Controllers
@@ -138,6 +139,46 @@ namespace AspNetCoreIdentityApp.Web.Controllers
             return RedirectToAction(nameof(ForgetPassword));
         }
 
+        public IActionResult ResetPassword(string userId, string token)
+        {
+            TempData["userId"] = userId;
+            TempData["token"] = token;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel request)
+        {
+            string userId = TempData["userId"].ToString();
+            string token = TempData["token"].ToString();
+
+            if (userId == null || token == null)
+            {
+                throw new Exception("Bir hata meydana geldi");
+            }
+
+            var hasUser = await _userManager.FindByIdAsync(userId);
+
+            if (hasUser == null)
+            {
+                ModelState.AddModelError(String.Empty, "Kullanýcý bulunamamýþtýr.");
+                return View();
+            }
+
+            var result = await _userManager.ResetPasswordAsync(hasUser, token, request.Password);
+
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "Þifreniz baþarýyla yenilenmiþtir.";
+            }
+            else
+            {
+                ModelState.AddModelErrorList(result.Errors.Select(x => x.Description).ToList());
+            }
+
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
