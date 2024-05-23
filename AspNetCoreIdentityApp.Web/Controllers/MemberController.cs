@@ -4,6 +4,7 @@ using AspNetCoreIdentityApp.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AspNetCoreIdentityApp.Web.Controllers
 {
@@ -77,6 +78,25 @@ namespace AspNetCoreIdentityApp.Web.Controllers
             TempData["SuccessMessage"] = "Şifreniz başarıyla değiştirilmiştir.";
 
             return View();
+        }
+
+        public async Task<IActionResult> UserEdit()
+        {
+            ViewBag.genderList = new SelectList(Enum.GetNames(typeof(Gender)));
+
+            var currentUser = (await _userManager.FindByNameAsync(User.Identity!.Name!))!;
+
+            var userEditViewModel = new UserEditViewModel()
+            {
+                UserName = currentUser.UserName!,
+                Email = currentUser.Email!,
+                Phone = currentUser.PhoneNumber!,
+                City = currentUser.City,
+                BirthDate = currentUser.BirthDate,
+                Gender = currentUser.Gender
+            };
+
+            return View(userEditViewModel);
         }
     }
 }
