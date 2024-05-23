@@ -20,12 +20,14 @@ namespace AspNetCoreIdentityApp.Web.ViewModels
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Şifre alanı boş bırakılamaz.")]
         [Display(Name = "Şifre: ")]
+        [MinLength(6, ErrorMessage = "Şifreniz en az 6 karakter olabilir.")]
         public string? Password { get; set; }
 
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage ="Şifre tekrarı yanlış.")]
         [Required(ErrorMessage = "Şifre tekrarı alanı boş bırakılamaz.")]
         [Display(Name = "Şifre tekrar: ")]
+        [MinLength(6, ErrorMessage = "Şifreniz en az 6 karakter olabilir.")]
         public string? PasswordConfirm { get; set; }
     }
 }

@@ -26,9 +26,11 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    var cookieBuilder = new CookieBuilder();
+    var cookieBuilder = new CookieBuilder
+    {
+        Name = "MembershipSystemCookie"
+    };
 
-    cookieBuilder.Name = "MembershipSystemCookie";
     options.LoginPath = new PathString("/Home/Signin");
     options.LogoutPath = new PathString("/Member/Logout");
     options.Cookie = cookieBuilder;
