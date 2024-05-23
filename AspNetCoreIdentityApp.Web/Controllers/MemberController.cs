@@ -36,5 +36,11 @@ namespace AspNetCoreIdentityApp.Web.Controllers
         {
             await _signInManager.SignOutAsync();
         }
+
+        public IActionResult PasswordChange()
+        {
+
+            return View();
+        }
     }
 }
