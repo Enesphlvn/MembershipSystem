@@ -9,7 +9,7 @@ namespace AspNetCoreIdentityApp.Web.CustomValidations
         {
             var errors = new List<IdentityError>();
 
-            if (password.ToLower().Contains(user.UserName.ToLower()))
+            if (password!.ToLower().Contains(user.UserName!.ToLower()))
             {
                 errors.Add(new() { Code = "PasswordContainUserName", Description = "Şifre alanı kullanıcı adı içeremez." });
             }

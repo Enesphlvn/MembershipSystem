@@ -51,9 +51,9 @@ namespace AspNetCoreIdentityApp.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInViewModel request, string? returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Action("Index", "Home");
+            returnUrl ??= Url.Action("Index", "Home");
 
-            var hasUser = await _userManager.FindByEmailAsync(request.Email);
+            var hasUser = await _userManager.FindByEmailAsync(request.Email!);
 
             if (hasUser == null)
             {
@@ -61,20 +61,20 @@ namespace AspNetCoreIdentityApp.Web.Controllers
                 return View();
             }
 
-            var signInResult = await _signInManager.PasswordSignInAsync(hasUser, request.Password, request.RememberMe, true);
+            var signInResult = await _signInManager.PasswordSignInAsync(hasUser, request.Password!, request.RememberMe, true);
 
             if (signInResult.Succeeded)
             {
-                return Redirect(returnUrl);
+                return Redirect(returnUrl!);
             }
 
             if (signInResult.IsLockedOut)
             {
-                ModelState.AddModelErrorList(new List<string>() { "3 dakika boyunca giriþ yapamazsýnýz." });
+                ModelState.AddModelErrorList(["3 dakika boyunca giriþ yapamazsýnýz."]);
                 return View();
             }
 
-            ModelState.AddModelErrorList(new List<string>() { "Email veya þifre yanlýþ.", $"Baþarýsýz giriþ sayýsý: {await _userManager.GetAccessFailedCountAsync(hasUser)}" });
+            ModelState.AddModelErrorList(["Email veya þifre yanlýþ.", $"Baþarýsýz giriþ sayýsý: {await _userManager.GetAccessFailedCountAsync(hasUser)}"]);
 
             return View();
 
@@ -93,7 +93,7 @@ namespace AspNetCoreIdentityApp.Web.Controllers
                 UserName = request.UserName,
                 Email = request.Email,
                 PhoneNumber = request.Phone
-            }, request.PasswordConfirm);
+            }, request.PasswordConfirm!);
 
             if (identityResult.Succeeded)
             {
@@ -116,7 +116,7 @@ namespace AspNetCoreIdentityApp.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel request)
         {
-            var hasUser = await _userManager.FindByEmailAsync(request.Email);
+            var hasUser = await _userManager.FindByEmailAsync(request.Email!);
 
             if (hasUser == null)
             {
@@ -132,7 +132,7 @@ namespace AspNetCoreIdentityApp.Web.Controllers
 
             //örnek link: https://localhost:7234?userId=1234&token=ajkldsadja
 
-            await _emailService.SendResetPasswordEmail(passwordResetLink, hasUser.Email);
+            await _emailService.SendResetPasswordEmail(passwordResetLink!, hasUser.Email!);
 
             TempData["SuccessMessage"] = "Þifre yenileme linki e-posta adresinize gönderilmiþtir.";
 
@@ -150,15 +150,15 @@ namespace AspNetCoreIdentityApp.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel request)
         {
-            string userId = TempData["userId"].ToString();
-            string token = TempData["token"].ToString();
+            var userId = TempData["userId"];
+            var token = TempData["token"];
 
             if (userId == null || token == null)
             {
                 throw new Exception("Bir hata meydana geldi");
             }
 
-            var hasUser = await _userManager.FindByIdAsync(userId);
+            var hasUser = await _userManager.FindByIdAsync(userId.ToString()!);
 
             if (hasUser == null)
             {
@@ -166,7 +166,7 @@ namespace AspNetCoreIdentityApp.Web.Controllers
                 return View();
             }
 
-            var result = await _userManager.ResetPasswordAsync(hasUser, token, request.Password);
+            var result = await _userManager.ResetPasswordAsync(hasUser, token.ToString()!, request.Password!);
 
             if (result.Succeeded)
             {

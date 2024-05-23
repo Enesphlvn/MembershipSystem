@@ -19,7 +19,7 @@ namespace AspNetCoreIdentityApp.Web.Services
         {
             var smtpClient = new SmtpClient();
 
-            smtpClient.Host = _emailSettings.Host;
+            smtpClient.Host = _emailSettings.Host!;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.UseDefaultCredentials = false;
             smtpClient.Port = 587;
@@ -28,7 +28,7 @@ namespace AspNetCoreIdentityApp.Web.Services
 
             var mailMessage = new MailMessage();
 
-            mailMessage.From = new MailAddress(_emailSettings.Email);
+            mailMessage.From = new MailAddress(_emailSettings.Email!);
             mailMessage.To.Add(toEmail);
 
             mailMessage.Subject = "Localhost | Şifre sıfırlama linki";
