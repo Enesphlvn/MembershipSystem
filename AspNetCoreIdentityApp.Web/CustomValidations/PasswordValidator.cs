@@ -9,19 +9,19 @@ namespace AspNetCoreIdentityApp.Web.CustomValidations
         {
             var errors = new List<IdentityError>();
 
-            if (password!.ToLower().Contains(user.UserName!.ToLower()))
+            if (password!.Contains(user.UserName!, StringComparison.CurrentCultureIgnoreCase))
             {
                 errors.Add(new() { Code = "PasswordContainUserName", Description = "Şifre alanı kullanıcı adı içeremez." });
             }
 
-            if (password.ToLower().StartsWith("1234"))
+            if (password.StartsWith("1234", StringComparison.CurrentCultureIgnoreCase))
             {
                 errors.Add(new() { Code = "PasswordContain1234", Description = "Şifre alanı ardışık rakam içeremez." });
             }
 
-            if (errors.Any())
+            if (errors.Count != 0)
             {
-                return Task.FromResult(IdentityResult.Failed(errors.ToArray()));
+                return Task.FromResult(IdentityResult.Failed([.. errors]));
             }
 
             return Task.FromResult(IdentityResult.Success);

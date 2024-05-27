@@ -16,9 +16,9 @@ namespace AspNetCoreIdentityApp.Web.CustomValidations
                 errors.Add(new() { Code = "UserNameContainFirstLetterDigit", Description = "Kullanıcı adının ilk karakteri sayısal bir karakter içeremez." });
             }
 
-            if (errors.Any())
+            if (errors.Count != 0)
             {
-                return Task.FromResult(IdentityResult.Failed(errors.ToArray()));
+                return Task.FromResult(IdentityResult.Failed([.. errors]));
             }
 
             return Task.FromResult(IdentityResult.Success);
