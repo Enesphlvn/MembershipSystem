@@ -25,13 +25,14 @@ namespace AspNetCoreIdentityApp.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var currentUser = await _userManager.FindByNameAsync(User.Identity!.Name!);
+            var currentUser = (await _userManager.FindByNameAsync(User.Identity!.Name!))!;
 
             var userViewModel = new UserViewModel
             {
-                Email = currentUser!.Email,
+                Email = currentUser.Email,
                 UserName = currentUser.UserName,
-                PhoneNumber = currentUser.PhoneNumber
+                PhoneNumber = currentUser.PhoneNumber,
+                PictureUrl = currentUser.Picture
             };
 
             return View(userViewModel);
@@ -120,12 +121,11 @@ namespace AspNetCoreIdentityApp.Web.Controllers
             currentUser.Gender = request.Gender;
 
 
-
             if (request.Picture != null && request.Picture.Length > 0)
             {
                 var wwwrootFolder = _fileProvider.GetDirectoryContents("wwwroot");
 
-                string randomFileName = $"{Guid.NewGuid().ToString()}{Path.GetExtension(request.Picture.FileName)}";
+                string randomFileName = $"{Guid.NewGuid()}{Path.GetExtension(request.Picture.FileName)}";
 
                 var newPicturePath = Path.Combine(wwwrootFolder.First(x => x.Name == "userPictures").PhysicalPath!, randomFileName);
 
