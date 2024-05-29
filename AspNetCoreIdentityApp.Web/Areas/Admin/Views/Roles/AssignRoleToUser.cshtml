@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "AssignRoleToUser";
+}
+
+@model List<AdminModel.AssignRoleToUserViewModel>
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2 class="text-center mb-3">Kullanıcıya Rol Atama</h2>
+        <form asp-action="AssignRoleToUser" asp-route-userId="@ViewBag.userId" method="post">
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" asp-for="@Model[i].Exist">
+                    <label class="form-check-label" for="exampleCheck1">@Model[i].Name</label>
+                    <input type="hidden" asp-for="@Model[i].Name" />
+                    <input type="hidden" asp-for="@Model[i].Id" />
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-8">
+                    <a class="btn btn-outline-warning" asp-controller="Home" asp-action="UserList">Kullanıcı listesine geri dön</a>
+                </div>
+                <div class="col-md-4 form-group text-end">
+                    <input type="submit" value="Rol ata" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
