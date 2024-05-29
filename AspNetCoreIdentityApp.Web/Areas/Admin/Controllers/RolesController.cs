@@ -46,6 +46,8 @@ namespace AspNetCoreIdentityApp.Web.Areas.Admin.Controllers
                 return View();
             }
 
+            TempData["SuccessMessage"] = "Rol oluşturuldu.";
+
             return RedirectToAction(nameof(RolesController.Index));
         }
 
@@ -70,7 +72,7 @@ namespace AspNetCoreIdentityApp.Web.Areas.Admin.Controllers
             {
                 throw new Exception("Güncellenecek rol bulunamamıştır.");
             }
-            
+
             roleToUpdate.Name = request.Name;
 
             await _roleManager.UpdateAsync(roleToUpdate);
@@ -78,6 +80,27 @@ namespace AspNetCoreIdentityApp.Web.Areas.Admin.Controllers
             ViewData["SuccessMessage"] = "Rol bilgisi güncellenmiştir.";
 
             return View();
+        }
+
+        public async Task<IActionResult> RoleDelete(string id)
+        {
+            var roleToDelete = await _roleManager.FindByIdAsync(id);
+
+            if (roleToDelete == null)
+            {
+                throw new Exception("Silinecek rol bulunamamıştır.");
+            }
+
+            var result = await _roleManager.DeleteAsync(roleToDelete);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception(result.Errors.Select(x => x.Description).First());
+            }
+
+            TempData["SuccessMessage"] = "Rol silindi.";
+
+            return RedirectToAction(nameof(RolesController.Index));
         }
     }
 }
