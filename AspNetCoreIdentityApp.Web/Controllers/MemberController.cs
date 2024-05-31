@@ -165,7 +165,7 @@ namespace AspNetCoreIdentityApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Claims()
+        public IActionResult Claims()
         {
             var userClaims = User.Claims.Select(x => new ClaimViewModel()
             {
