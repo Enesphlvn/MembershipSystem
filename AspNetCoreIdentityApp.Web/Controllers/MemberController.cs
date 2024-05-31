@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.FileProviders;
+using System.Security.Claims;
 
 namespace AspNetCoreIdentityApp.Web.Controllers
 {
@@ -161,6 +162,19 @@ namespace AspNetCoreIdentityApp.Web.Controllers
             };
 
             return View(userEditViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Claims()
+        {
+            var userClaims = User.Claims.Select(x => new ClaimViewModel()
+            {
+                Issuer = x.Issuer,
+                Type = x.Type,
+                Value = x.Value
+            }).ToList();
+
+            return View(userClaims);
         }
 
         public IActionResult AccessDenied(string ReturnUrl)

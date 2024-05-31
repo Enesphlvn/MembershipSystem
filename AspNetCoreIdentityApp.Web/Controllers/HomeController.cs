@@ -82,7 +82,6 @@ namespace AspNetCoreIdentityApp.Web.Controllers
             ModelState.AddModelErrorList(["Email veya þifre yanlýþ.", $"Baþarýsýz giriþ sayýsý: {await _userManager.GetAccessFailedCountAsync(hasUser)}"]);
 
             return View();
-
         }
 
         [HttpPost]
