@@ -69,20 +69,24 @@ namespace AspNetCoreIdentityApp.Web.Controllers
 
             var signInResult = await _signInManager.PasswordSignInAsync(hasUser, request.Password!, request.RememberMe, true);
 
-            if (signInResult.Succeeded)
-            {
-                return Redirect(returnUrl!);
-            }
-
             if (signInResult.IsLockedOut)
             {
                 ModelState.AddModelErrorList(["3 dakika boyunca giriþ yapamazsýnýz."]);
                 return View();
             }
 
-            ModelState.AddModelErrorList(["Email veya þifre yanlýþ.", $"Baþarýsýz giriþ sayýsý: {await _userManager.GetAccessFailedCountAsync(hasUser)}"]);
+            if (!signInResult.Succeeded)
+            {
+                ModelState.AddModelErrorList(["Email veya þifre yanlýþ.", $"Baþarýsýz giriþ sayýsý: {await _userManager.GetAccessFailedCountAsync(hasUser)}"]);
+                return View();
+            }
 
-            return View();
+            if (hasUser.BirthDate.HasValue)
+            {
+                await _signInManager.SignInWithClaimsAsync(hasUser, request.RememberMe, [new Claim("birthdate", hasUser.BirthDate.Value.ToString())]);
+            }
+
+            return Redirect(returnUrl!);
         }
 
         [HttpPost]
@@ -113,7 +117,7 @@ namespace AspNetCoreIdentityApp.Web.Controllers
 
             var claimResult = await _userManager.AddClaimAsync(user!, exchangeExpireClaim);
 
-            if(!claimResult.Succeeded)
+            if (!claimResult.Succeeded)
             {
                 ModelState.AddModelErrorList(claimResult.Errors.Select(x => x.Description).ToList());
 

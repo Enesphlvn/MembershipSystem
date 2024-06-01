@@ -2,8 +2,10 @@ using AspNetCoreIdentityApp.Web.ClaimProviders;
 using AspNetCoreIdentityApp.Web.Extensions;
 using AspNetCoreIdentityApp.Web.Models;
 using AspNetCoreIdentityApp.Web.OptionsModel;
+using AspNetCoreIdentityApp.Web.Requirements;
 using AspNetCoreIdentityApp.Web.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -29,14 +31,17 @@ builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Emai
 builder.Services.AddIdentityWithExtension();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IClaimsTransformation, UserClaimProvider>();
+builder.Services.AddScoped<IAuthorizationHandler, ExchangeExpireRequirmentHandler>();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("AnkaraPolicy", policy =>
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AnkaraPolicy", policy =>
     {
         policy.RequireClaim("city", "ankara");
+    })
+    .AddPolicy("ExchangePolicy", policy =>
+    {
+        policy.AddRequirements(new ExchangeExpireRequirment());
     });
-});
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
