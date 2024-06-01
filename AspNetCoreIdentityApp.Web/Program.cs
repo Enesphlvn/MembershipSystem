@@ -30,6 +30,14 @@ builder.Services.AddIdentityWithExtension();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IClaimsTransformation, UserClaimProvider>();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AnkaraPolicy", policy =>
+    {
+        policy.RequireClaim("city", "ankara");
+    });
+});
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     var cookieBuilder = new CookieBuilder

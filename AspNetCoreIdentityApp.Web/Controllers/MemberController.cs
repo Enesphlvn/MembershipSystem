@@ -177,6 +177,15 @@ namespace AspNetCoreIdentityApp.Web.Controllers
             return View(userClaims);
         }
 
+        [Authorize(Policy = "AnkaraPolicy")]
+        [HttpGet]
+        public IActionResult AnkaraPage()
+        {
+
+
+            return View();
+        }
+
         public IActionResult AccessDenied(string ReturnUrl)
         {
             string message = string.Empty;
@@ -187,5 +196,7 @@ namespace AspNetCoreIdentityApp.Web.Controllers
 
             return View();
         }
+
+
     }
 }
