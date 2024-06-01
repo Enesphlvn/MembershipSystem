@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace AspNetCoreIdentityApp.Web.Controllers
 {
@@ -99,16 +100,29 @@ namespace AspNetCoreIdentityApp.Web.Controllers
                 PhoneNumber = request.Phone
             }, request.PasswordConfirm!);
 
-            if (identityResult.Succeeded)
+            if (!identityResult.Succeeded)
             {
-                TempData["SuccessMessage"] = "Üye kayýt iþlemi baþarýyla gerçekleþmiþtir.";
+                ModelState.AddModelErrorList(identityResult.Errors.Select(x => x.Description).ToList());
 
-                return RedirectToAction(nameof(HomeController.SignUp));
+                return View();
             }
 
-            ModelState.AddModelErrorList(identityResult.Errors.Select(x => x.Description).ToList());
+            var exchangeExpireClaim = new Claim("ExchangeExpireDate", DateTime.Now.AddDays(10).ToString());
 
-            return View();
+            var user = await _userManager.FindByNameAsync(request.UserName);
+
+            var claimResult = await _userManager.AddClaimAsync(user!, exchangeExpireClaim);
+
+            if(!claimResult.Succeeded)
+            {
+                ModelState.AddModelErrorList(claimResult.Errors.Select(x => x.Description).ToList());
+
+                return View();
+            }
+
+            TempData["SuccessMessage"] = "Üye kayýt iþlemi baþarýyla gerçekleþmiþtir.";
+
+            return RedirectToAction(nameof(HomeController.SignIn));
         }
 
         public IActionResult ForgetPassword()
