@@ -1,7 +1,7 @@
 using AspNetCoreIdentityApp.Web.ClaimProviders;
 using AspNetCoreIdentityApp.Web.Extensions;
 using AspNetCoreIdentityApp.Web.Models;
-using AspNetCoreIdentityApp.Web.OptionsModel;
+using AspNetCoreIdentityApp.Core.OptionsModel;
 using AspNetCoreIdentityApp.Web.Requirements;
 using AspNetCoreIdentityApp.Web.Services;
 using Microsoft.AspNetCore.Authentication;
