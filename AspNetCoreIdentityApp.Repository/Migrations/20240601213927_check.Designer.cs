@@ -13,7 +13,7 @@ namespace AspNetCoreIdentityApp.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20240601213927_check")]
-    partial class check
+    partial class Check
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

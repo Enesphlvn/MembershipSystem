@@ -3,7 +3,7 @@ using AspNetCoreIdentityApp.Web.Extensions;
 using AspNetCoreIdentityApp.Repository.Models;
 using AspNetCoreIdentityApp.Core.OptionsModel;
 using AspNetCoreIdentityApp.Web.Requirements;
-using AspNetCoreIdentityApp.Web.Services;
+using AspNetCoreIdentityApp.Service.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +36,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IClaimsTransformation, UserClaimProvider>();
 builder.Services.AddScoped<IAuthorizationHandler, ExchangeExpireRequirmentHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, ViolenceRequirmentHandler>();
+builder.Services.AddScoped<IMemberService, MemberService>();
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("AnkaraPolicy", policy =>

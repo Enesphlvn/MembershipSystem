@@ -5,7 +5,7 @@
 namespace AspNetCoreIdentityApp.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class check : Migration
+    public partial class Check : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
