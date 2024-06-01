@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Web", "AspNetCoreIdentityApp.Web\AspNetCoreIdentityApp.Web.csproj", "{7C681223-BEA6-4BAC-97FA-B003294A8202}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreIdentityApp.Web", "AspNetCoreIdentityApp.Web\AspNetCoreIdentityApp.Web.csproj", "{7C681223-BEA6-4BAC-97FA-B003294A8202}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Core", "AspNetCoreIdentityApp.Core\AspNetCoreIdentityApp.Core.csproj", "{734EBA64-08B9-4DBE-B572-E96DA3BA95ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Repository", "AspNetCoreIdentityApp.Repository\AspNetCoreIdentityApp.Repository.csproj", "{DEF51587-D89D-400F-99F4-048B75AF305A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentityApp.Service", "AspNetCoreIdentityApp.Service\AspNetCoreIdentityApp.Service.csproj", "{F057B898-7873-48B1-863C-FF0C52DC7380}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{7C681223-BEA6-4BAC-97FA-B003294A8202}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C681223-BEA6-4BAC-97FA-B003294A8202}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C681223-BEA6-4BAC-97FA-B003294A8202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{734EBA64-08B9-4DBE-B572-E96DA3BA95ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{734EBA64-08B9-4DBE-B572-E96DA3BA95ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{734EBA64-08B9-4DBE-B572-E96DA3BA95ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{734EBA64-08B9-4DBE-B572-E96DA3BA95ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEF51587-D89D-400F-99F4-048B75AF305A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEF51587-D89D-400F-99F4-048B75AF305A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEF51587-D89D-400F-99F4-048B75AF305A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEF51587-D89D-400F-99F4-048B75AF305A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F057B898-7873-48B1-863C-FF0C52DC7380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F057B898-7873-48B1-863C-FF0C52DC7380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F057B898-7873-48B1-863C-FF0C52DC7380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F057B898-7873-48B1-863C-FF0C52DC7380}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
