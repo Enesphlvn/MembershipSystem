@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.FileProviders;
 using System.Collections.Generic;
 using System.Security.Claims;
-using AspNetCoreIdentityApp.Web.Models;
+using AspNetCoreIdentityApp.Repository.Models;
 
 namespace AspNetCoreIdentityApp.Web.Controllers
 {
